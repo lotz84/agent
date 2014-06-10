@@ -8,6 +8,13 @@
 
 import Foundation
 
+enum HTTPMethod : String {
+    case GET    = "GET"
+    case POST   = "POST"
+    case PUT    = "PUT"
+    case DELETE = "DELETE"
+}
+
 class Agent: NSObject {
 
   typealias HTTPHeaderType    = Dictionary<String, String>
@@ -27,10 +34,10 @@ class Agent: NSObject {
    * Initialize
    */
 
-  init(method: String, url: String, headers: HTTPHeaderType!) {
+  init(method: HTTPMethod, url: String, headers: HTTPHeaderType!) {
     let _url = NSURL(string: url)
     self.request = NSMutableURLRequest(URL: _url)
-    self.request.HTTPMethod = method
+    self.request.HTTPMethod = method.toRaw()
     self.request.allHTTPHeaderFields = headers
   }
 
@@ -39,11 +46,11 @@ class Agent: NSObject {
    */
 
   class func get(url: String) -> Agent {
-    return Agent(method: "GET", url: url, headers: nil)
+    return Agent(method: .GET, url: url, headers: nil)
   }
 
   class func get(url: String, headers: HTTPHeaderType) -> Agent {
-    return Agent(method: "GET", url: url, headers: headers)
+    return Agent(method: .GET, url: url, headers: headers)
   }
 
   class func get(url: String, done: ResponseBlock) -> Agent {
@@ -59,11 +66,11 @@ class Agent: NSObject {
    */
 
   class func post(url: String) -> Agent {
-    return Agent(method: "POST", url: url, headers: nil)
+    return Agent(method: .POST, url: url, headers: nil)
   }
 
   class func post(url: String, headers: HTTPHeaderType) -> Agent {
-    return Agent(method: "POST", url: url, headers: headers)
+    return Agent(method: .POST, url: url, headers: headers)
   }
 
   class func post(url: String, done: ResponseBlock) -> Agent {
@@ -95,11 +102,11 @@ class Agent: NSObject {
    */
 
   class func put(url: String) -> Agent {
-    return Agent(method: "PUT", url: url, headers: nil)
+    return Agent(method: .PUT, url: url, headers: nil)
   }
 
   class func put(url: String, headers: HTTPHeaderType) -> Agent {
-    return Agent(method: "PUT", url: url, headers: headers)
+    return Agent(method: .PUT, url: url, headers: headers)
   }
 
   class func put(url: String, done: ResponseBlock) -> Agent {
@@ -131,11 +138,11 @@ class Agent: NSObject {
    */
 
   class func delete(url: String) -> Agent {
-    return Agent(method: "DELETE", url: url, headers: nil)
+    return Agent(method: .DELETE, url: url, headers: nil)
   }
 
   class func delete(url: String, headers: HTTPHeaderType) -> Agent {
-    return Agent(method: "DELETE", url: url, headers: headers)
+    return Agent(method: .DELETE, url: url, headers: headers)
   }
 
   class func delete(url: String, done: ResponseBlock) -> Agent {
